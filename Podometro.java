@@ -92,8 +92,32 @@ public class Podometro {
     public void registrarCaminata(int pasos, int dia, int horaInicio,
                             int horaFin) {
 
+        switch (dia){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5: 
+            {
+                totalPasosLaborales = pasos;
+                totalDistanciaSemana = (pasos * longitudZancada / 1000000);
+            } 
+            break;
+            case SABADO: 
+            {
+                totalPasosSabado = pasos;
+                
+            }
+            break;
+            case DOMINGO:
+            {
+                totalPasosDomingo = pasos;
+                totalDistanciaFinSemana = (pasos * longitudZancada / 100000);
+            }
+            break;
+        }
         
-
+        
     }
     
      /**
@@ -104,8 +128,16 @@ public class Podometro {
      *  
      */
     public void printConfiguracion() {
-
-        
+        System.out.println("Configuración del podometro");
+        System.out.println("***************************");
+        System.out.println("Altura :" + altura + "M");
+        if(sexo == HOMBRE){
+            System.out.println("Sexo : HOMBRE");
+            }
+        else {
+            System.out.println("Sexo : MUJER");
+        }
+        System.out.println("Longitud zancada :" + longitudZancada + "M");
 
     }
 
@@ -143,7 +175,17 @@ public class Podometro {
      */    
     public void reset() {
 
-        
+        altura = 0;
+        sexo = MUJER;
+        longitudZancada = 0;
+        totalPasosLaborales = 0;
+        totalPasosSabado = 0;
+        totalPasosDomingo = 0;
+        totalDistanciaSemana = 0;
+        totalDistanciaFinSemana = 0;
+        tiempo = 0;
+        caminatasNoche = 0;
+         
 
     }
 
