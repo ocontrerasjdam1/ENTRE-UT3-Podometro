@@ -17,7 +17,7 @@ public class Podometro {
     private double altura;
     private char sexo;
     private double longitudZancada;
-    private int totalPasosLaborales;
+    private int totalPasosLaborables;
     private int totalPasosSabado;
     private int totalPasosDomingo;
     private double totalDistanciaSemana;
@@ -35,7 +35,7 @@ public class Podometro {
         altura = 0;
         sexo = MUJER;
         longitudZancada = 0;
-        totalPasosLaborales = 0;
+        totalPasosLaborables = 0;
         totalPasosSabado = 0;
         totalPasosDomingo = 0;
         totalDistanciaSemana = 0;
@@ -99,7 +99,7 @@ public class Podometro {
             case 4:
             case 5: 
             {
-                totalPasosLaborales = pasos;
+                totalPasosLaborables = pasos;
                 totalDistanciaSemana = (pasos * longitudZancada / 1000000);
             } 
             break;
@@ -160,10 +160,19 @@ public class Podometro {
      *  Calcula y devuelve un String que representa el nombre del día
      *  en el que se ha caminado más pasos - "SÁBADO"   "DOMINGO" o  "LABORABLES"
      */
-    public void diaMayorNumeroPasos() {
+    public String diaMayorNumeroPasos() {
 
-        
-        
+        if (totalPasosLaborables > totalPasosSabado && 
+        totalPasosLaborables > totalPasosDomingo){
+            return "LABORABLES";
+        }
+        else if (totalPasosSabado > totalPasosLaborables && 
+        totalPasosSabado > totalPasosDomingo){
+            return "SABADO";
+        }
+        else {
+            return "DOMINGO";
+        }
 
     }
 
@@ -178,7 +187,7 @@ public class Podometro {
         altura = 0;
         sexo = MUJER;
         longitudZancada = 0;
-        totalPasosLaborales = 0;
+        totalPasosLaborables = 0;
         totalPasosSabado = 0;
         totalPasosDomingo = 0;
         totalDistanciaSemana = 0;
