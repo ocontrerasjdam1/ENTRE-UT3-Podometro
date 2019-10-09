@@ -99,22 +99,41 @@ public class Podometro {
             case 4:
             case 5: 
             {
-                totalPasosLaborables = pasos;
-                totalDistanciaSemana = (pasos * longitudZancada / 1000000);
+                totalPasosLaborables += pasos;
+                totalDistanciaSemana += (pasos * longitudZancada / 1000000);
             } 
             break;
             case SABADO: 
             {
-                totalPasosSabado = pasos;
-                
+                totalPasosSabado += pasos;
+                totalDistanciaFinSemana += (pasos * longitudZancada / 100000);
             }
             break;
             case DOMINGO:
             {
-                totalPasosDomingo = pasos;
-                totalDistanciaFinSemana = (pasos * longitudZancada / 100000);
+                totalPasosDomingo += pasos;
+                totalDistanciaFinSemana += (pasos * longitudZancada / 100000);
             }
             break;
+        }
+        
+        int cuandoHoraInicio = horaInicio / 100;
+        int cuandoMinutoInicio = horaInicio % 100;
+        int cuandoHoraFin = horaFin / 100;
+        int cuandoMinutoFin = horaFin % 100;
+        
+        if (cuandoHoraInicio > 20){
+            caminatasNoche++;
+        }
+        
+        if (cuandoMinutoInicio > cuandoMinutoFin){
+            tiempo += ((cuandoHoraFin - cuandoHoraInicio - 1)* 60) + (60 + cuandoMinutoFin - cuandoMinutoInicio);
+        }
+        else if (cuandoMinutoInicio == cuandoMinutoFin){
+            tiempo += ((cuandoHoraFin - cuandoHoraInicio) * 60);
+        }
+        else {
+            tiempo += ((cuandoHoraFin - cuandoHoraInicio) * 60) + (cuandoMinutoFin - cuandoMinutoInicio);
         }
         
         
@@ -130,14 +149,14 @@ public class Podometro {
     public void printConfiguracion() {
         System.out.println("Configuración del podometro");
         System.out.println("***************************");
-        System.out.println("Altura :" + altura + "M");
+        System.out.println("Altura :" + altura / 100 + "M");
         if(sexo == HOMBRE){
             System.out.println("Sexo : HOMBRE");
             }
         else {
             System.out.println("Sexo : MUJER");
         }
-        System.out.println("Longitud zancada :" + longitudZancada + "M");
+        System.out.println("Longitud zancada :" + longitudZancada / 100 + "M");
 
     }
 
@@ -149,7 +168,23 @@ public class Podometro {
      *  
      */
     public void printEstadísticas() {
-
+        System.out.println("Estadisticas");
+        System.out.println("***************************");
+        
+        System.out.println("Distancia recorrida toda la semana :" + (totalDistanciaSemana + totalDistanciaFinSemana) + "Km"); 
+        System.out.println("Distancia recorrida fin de semana :" + totalDistanciaFinSemana + "Km");
+        
+        System.out.println("Nº pasos dias laborables :" + totalPasosLaborables);
+        System.out.println("Nº pasos sabado :" + totalPasosSabado);
+        System.out.println("Nº pasos domingo :" + totalPasosDomingo);
+        
+        System.out.println("Nº caminatas realizadas a partir de las 21.00 :" + caminatasNoche);
+        
+        System.out.println("Tiempo total caminado en la semana :" + (tiempo / 60) + "H" + (tiempo % 60) + "Min");
+        
+        /** 
+         * NO SE MOSTRAR DIAS CON MAS PASOS CAMINADOS
+         */
         
 
     }
